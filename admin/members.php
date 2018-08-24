@@ -25,7 +25,7 @@ session_start();
 		}elseif($do == 'Edit'){
 
 			// Edit page 
-			echo 'welcome to edit page';
+			echo 'welcome to edit page you id is ' . $_GET['userid'];
 		}
 
 		include $tpl . 'footer.php';
