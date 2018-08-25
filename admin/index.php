@@ -33,7 +33,6 @@
 		$stmt->execute(array($username, $hashedpass));
 		$row = $stmt->fetch();
 		$count = $stmt->rowCount();
-		echo $count;
 
 		// If the count > 1 that means the database has record about this user
 

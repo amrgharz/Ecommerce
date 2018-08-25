@@ -63,3 +63,12 @@ body{
 	padding: 10px 15px;
 }
 /*   ~End   Bootstrab Rolz Editing ~*/
+
+/*Start members page*/
+
+h1 {
+	font-size: 55px;
+	margin:40px 0;
+	font-weight:bold;
+	color:#666;
+}
