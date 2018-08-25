@@ -24,6 +24,13 @@ body{
 	background-color:#008dde;
 }
 
+.astrisk{
+	font-size: 30px;
+	position: absolute;
+	right: 35px;
+	top: 8px;
+	color: tomato;
+}
 /*   ~End Login Rolz~*/
 
 
@@ -61,6 +68,10 @@ body{
 .dropdown-menu>li>a{
 	color: #FFF;
 	padding: 10px 15px;
+}
+
+.form-control{
+	position: relative;
 }
 /*   ~End   Bootstrab Rolz Editing ~*/
 

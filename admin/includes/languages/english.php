@@ -7,11 +7,11 @@
 		static $lang = array(
 
 			'HOME'			=>  'Home',
-			'CATEGORIES' 	=>  'categories',
-			'ITEMS' 		=>  'items',
-			'MEMBERS' 		=>  'members',
-			'STATISTICS' 	=>  'statistcs',
-			'LOGS' 			=>  'logs',
+			'CATEGORIES' 	=>  'Categories',
+			'ITEMS' 		=>  'Items',
+			'MEMBERS' 		=>  'Members',
+			'STATISTICS' 	=>  'Statistcs',
+			'LOGS' 			=>  'Logs',
  
 		);
 			return $lang[$phrase];

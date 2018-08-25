@@ -12,5 +12,17 @@ $(function(){
 		$(this).attr('placeholder' , $(this).attr('data-text'));
 	});
 
+	// Add Asterisk when the field is required
+
+	$('input').each(function(){
+
+		if($(this).attr('required') === 'required'){
+
+			$(this).after('<span class="astrisk">*</span>');
+		}
+	
+	})
+
 
 });
+
