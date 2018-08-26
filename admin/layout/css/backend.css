@@ -89,8 +89,21 @@ h1 {
 	top : 5px;
 	right:-25px;
 }
+.main-table{
+	-webkit-box-shadow:0 3px 10px #CCC;
+	-moz-box-shadow:0 3px 10px #CCC;
+	 box-shadow:0 3px 10px #CCC;
+}
 
-.main-table tr:first-child{ /*We can use Thead instead*/
+.main-table td {
+	background-color:#FFF;
+	vertical-align: middle !important ;
+}
+
+.main-table .btn{
+	padding: 3px 10px ;
+}
+.main-table tr:first-child td{ /*We can use Thead instead*/
 	background-color: #333;
 	color:#FFF;
 }

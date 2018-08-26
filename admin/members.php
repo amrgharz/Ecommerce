@@ -57,15 +57,15 @@ session_start();
 									echo "<td>" . $row['Fullname'] . "</td>";
 									echo "<td></td>";
 									echo "<td> 
-												<a href='members.php?do=Edit&userid=" . $row['UserID'] . "' class='btn btn-success'>Edit</a>
-												<a href='members.php?do=Delete&userid=" . $row['UserID'] . "' class='btn btn-danger confirm'>Delete</a>
+												<a href='members.php?do=Edit&userid=" . $row['UserID'] . "' class='btn btn-success'><i class ='fa fa-edit'></i>Edit</a>
+												<a href='members.php?do=Delete&userid=" . $row['UserID'] . "' class='btn btn-danger confirm'><i class ='fa fa-close'></i>Delete</a>
 										 </td>";
 								echo "</tr>";
 							}
 						?>
 					</table>
 				</div>
-				<a href='members.php?do=Add'class="btn btn-primary "><i class=" fa fa-plus"></i>Add new member </a>
+				<a href='members.php?do=Add'class="btn btn-primary "><i class=" fa fa-plus"></i>New Member </a>
 
 			</div>
 
@@ -130,7 +130,7 @@ session_start();
 
 				echo "<h1 class='text-center'>Update Page</h1>";
 
-			echo "<div class='container'>";
+				echo "<div class='container'>";
 
 
 				// Get the variables From the Form 
@@ -173,31 +173,41 @@ session_start();
 				// check if there is no error proceed the update  operation
 
 				if(empty($error_handler)){
+				// Check if user Exists in Database
 
-				//Insert userinfo In the database
+					$check = check_item("Username", "shop.users", $user);
 
-				$stmt = $con->prepare("INSERT INTO 
-												shop.users(Username, Password, Email, Fullname) 
-												VALUES(:zuser, :zpass, :zmail, :zname)");
+						if($check == 1){
 
-				$stmt->execute(array(
+							echo "<div class= 'alert alert-danger'>hmmm this user already exists, you gotta change is </div>";
+						}else{
 
-					'zuser' => $user,
-					'zpass' => $hashed_pass,
-					'zmail' => $email,
-					'zname' => $fullname
+							//Insert userinfo In the database
 
-				));
+							$stmt = $con->prepare("INSERT INTO 
+																shop.users(Username, Password, Email, Fullname) 
+													VALUES(:zuser, :zpass, :zmail, :zname)");
 
-				// Echo Success Meassage 
+							$stmt->execute(array(
 
-				echo "<div class= 'alert alert-success'>" . $stmt->rowCount() . ' RECORD INSERTED</div>';
+							'zuser' => $user,
+							'zpass' => $hashed_pass,
+							'zmail' => $email,
+							'zname' => $fullname
 
+							));
+
+							// Echo Success Meassage 
+
+							echo "<div class= 'alert alert-success'>" . $stmt->rowCount() . ' RECORD INSERTED</div>';
+						}
 				}
 
 			}else{
 
-				echo " YOU Man Get the Fuck out of here";
+				$error_msg =" YOU Man Get the Fuck out of here";
+
+				redirect_home($error_msg , 5 );
 			}
 
 			echo "</div>";
