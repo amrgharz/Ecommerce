@@ -75,6 +75,25 @@ body{
 }
 /*   ~End   Bootstrab Rolz Editing ~*/
 
+/* Start Dashboard*/
+
+.home-stats .stat{
+	background-color: #EEE;
+	border : 1px solid #CCC;
+	padding : 10px;
+	font-size: 15px;
+}
+
+.home-stats .stat span{
+	display: block;
+	font-size:25px;
+}
+
+.latest{
+	margin-top:30px;
+}
+/* End Dashboard*/
+
 /*Start members page*/
 
 h1 {
