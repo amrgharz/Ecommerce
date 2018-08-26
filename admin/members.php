@@ -55,7 +55,7 @@ session_start();
 									echo "<td>" . $row['Username'] . "</td>";
 									echo "<td>" . $row['Email'] . "</td>";
 									echo "<td>" . $row['Fullname'] . "</td>";
-									echo "<td></td>";
+									echo "<td>" . $row['Date']  .  "</td>";
 									echo "<td> 
 												<a href='members.php?do=Edit&userid=" . $row['UserID'] . "' class='btn btn-success'><i class ='fa fa-edit'></i>Edit</a>
 												<a href='members.php?do=Delete&userid=" . $row['UserID'] . "' class='btn btn-danger confirm'><i class ='fa fa-close'></i>Delete</a>
@@ -179,14 +179,16 @@ session_start();
 
 						if($check == 1){
 
-							echo "<div class= 'alert alert-danger'>hmmm this user already exists, you gotta change is </div>";
+							$the_msg = "<div class= 'alert alert-danger'>hmmm this user already exists, you gotta change is </div>";
+
+							redirect_home($the_msg, 'back');	
 						}else{
 
 							//Insert userinfo In the database
 
 							$stmt = $con->prepare("INSERT INTO 
-																shop.users(Username, Password, Email, Fullname) 
-													VALUES(:zuser, :zpass, :zmail, :zname)");
+																shop.users(Username, Password, Email, Fullname, Date) 
+													VALUES(:zuser, :zpass, :zmail, :zname, now())");
 
 							$stmt->execute(array(
 
@@ -389,21 +391,13 @@ session_start();
 
 				$userid = isset($_GET['userid']) && is_numeric($_GET['userid']) ? intval($_GET['userid']) : 0 ;
 
-				// SElect all the data associated with userid 
+				// SElect all the data associated with this userid 
 
-				$stmt = $con->prepare("SELECT * FROM shop.users WHERE UserID = ? LIMIT 1");
-
-				//executer the array
-
-				$stmt->execute(array($userid));
-
-				// The row count 
-
-				$count = $stmt->rowCount();
+				$check = check_item('userid', 'shop.users', $userid);
 
 				// If there such Id Delete it
 
-				if($stmt->rowCount() > 0){
+				if($check > 0){
 						
 					$stmt = $con->prepare("DELETE FROM shop.users WHERE UserID = :zuser");
 
