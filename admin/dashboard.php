@@ -8,6 +8,7 @@
 		include 'init.php';
 
 		// Start The Dashboard Page
+
 ?>
 		<div class='container home-stats text-center'>
 			<h1>Dashboard</h1>
@@ -15,7 +16,7 @@
 				<div class='col-md-3'>
 					<div class='stat'>
 						Total Mambers
-						<span>200</span>
+						<span><?php echo count_items('UserID', 'shop.users')?></span>
 					</div>	
 				</div>
 				<div class='col-md-3'>
