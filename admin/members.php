@@ -199,14 +199,18 @@ session_start();
 
 							// Echo Success Meassage 
 
-							echo "<div class= 'alert alert-success'>" . $stmt->rowCount() . ' RECORD INSERTED</div>';
+							$the_msg ="<div class= 'alert alert-success'>" . $stmt->rowCount() . ' RECORD INSERTED</div>';
+							redirect_home($the_msg, 'back' );
 						}
 				}
 
 			}else{
+
+				echo "<div class='container'>";
 				$the_msg = "<div class= 'alert alert-danger'>Yo Man Get The Fuck Out Of Here</div>";
 
 				redirect_home($the_msg, 'back',10 );
+				echo "</div>";
 			}
 
 			echo "</div>";
@@ -291,8 +295,11 @@ session_start();
 			// If there is no such ID show an error message 
 
 			}else{
+				echo "<div class='container'>";
 
-				echo 'there is no such id ';
+				$the_msg = "<div class='alert alert-danger'>there is no such ID</div>" ;
+
+				redirect_home($the_msg);
 			}
 		}elseif ($do == 'Update' ){ //Update Page
 
@@ -364,7 +371,8 @@ session_start();
 
 			}else{
 
-				echo " YOU Man Get the Fuck out of here";
+				$the_msg =" <div class = 'alert alert-danger'> YOU Man Get the Fuck out of here</div>";
+				redirect_home($the_msg);
 			}
 
 			echo "</div>";
@@ -403,13 +411,13 @@ session_start();
 
 						$stmt->execute();
 
-						echo "<div class= 'alert alert-success'>" . $stmt->rowCount() . ' RECORD DELETED</div>';
+						$the_msg =  "<div class= 'alert alert-success'>" . $stmt->rowCount() . ' RECORD DELETED</div>';
 
-
-
+						redirect_home($the_msg);
 				}else{
 
-					echo "bad bad";
+					$the_msg = "<div class='alert alert-danger'>bad bad</div>";
+					redirect_home($the_msg);
 			}
 			echo "</div>";
 		}

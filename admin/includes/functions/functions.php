@@ -30,21 +30,21 @@ function get_title (){
 
 */
 
-function redirect_home ($the_msg ,$url = null,  $seconds = 3 ){
+function redirect_home ($the_msg , $url = null,  $seconds = 3 ){
 
-	if($url === null){
+		if($url === null){
 
-		$url ='index.php';
+			$url ='index.php';
 
-		$link = 'Homepage';
-	}else{
+			$link = 'Homepage';
+		}else{
 
-		if(isset($_SERVER['HTTP_REFERER']) && $_SERVER['HTTP_REFERER'] !== ""){
+			if(isset($_SERVER['HTTP_REFERER']) && $_SERVER['HTTP_REFERER'] !== ""){
 
 			$url = $_SERVER['HTTP_REFERER'];
 
 			$link =' Previous Page';
-		}else{
+			}else{	
 
 			$url = 'index.php';
 
@@ -57,7 +57,7 @@ function redirect_home ($the_msg ,$url = null,  $seconds = 3 ){
 
 	echo "<div class='alert alert-info'>You will be directed to $link after $seconds Seconds. </div>";
 
-	header("refresh:$seconds;url=index.php");
+	header("refresh:$seconds;url=$url");
 
 	exit();
 }
