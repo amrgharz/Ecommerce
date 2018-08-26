@@ -204,10 +204,9 @@ session_start();
 				}
 
 			}else{
+				$the_msg = "<div class= 'alert alert-danger'>Yo Man Get The Fuck Out Of Here</div>";
 
-				$error_msg =" YOU Man Get the Fuck out of here";
-
-				redirect_home($error_msg , 5 );
+				redirect_home($the_msg, 'back',10 );
 			}
 
 			echo "</div>";
@@ -355,7 +354,11 @@ session_start();
 
 					// Echo Success Meassage 
 
-					echo "<div class= 'alert alert-success'>" . $stmt->rowCount() . ' RECORD UPDATED</div>';
+					$the_msg = "<div class= 'alert alert-success'>" . $stmt->rowCount() . ' RECORD UPDATED</div>';
+
+					redirect_home($the_msg, 'back',5 );
+
+
 
 				}
 

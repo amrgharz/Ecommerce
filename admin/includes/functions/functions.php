@@ -22,13 +22,40 @@ function get_title (){
 /*
 	Home Redirect Function v1.0
 	Parameters ([Echo the error message], [Seconds before Redirecting])
+*//*
+	Redirect function v2.0
+	parameters : Echo the msg [Error | Succsess | Warning]
+				 seconds befor redirecting 
+				 URL = the link to redirect to 
+
 */
 
-function redirect_home ($error_msg , $seconds = 3 ){
+function redirect_home ($the_msg ,$url = null,  $seconds = 3 ){
 
-	echo "<div class='alert alert-danger'>$error_msg</div>";
+	if($url === null){
 
-	echo "<div class='alert alert-info'>You will be directed to the home page after $seconds Seconds. </div>";
+		$url ='index.php';
+
+		$link = 'Homepage';
+	}else{
+
+		if(isset($_SERVER['HTTP_REFERER']) && $_SERVER['HTTP_REFERER'] !== ""){
+
+			$url = $_SERVER['HTTP_REFERER'];
+
+			$link =' Previous Page';
+		}else{
+
+			$url = 'index.php';
+
+			$link = 'Homepage';
+
+		}
+	}
+
+	echo $the_msg;
+
+	echo "<div class='alert alert-info'>You will be directed to $link after $seconds Seconds. </div>";
 
 	header("refresh:$seconds;url=index.php");
 
