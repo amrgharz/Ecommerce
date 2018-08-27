@@ -69,7 +69,7 @@ session_start();
 
 												if($row['Regstatus'] == 0){
 
-													echo "<a href='members.php?do=Edit&userid=" . $row['UserID'] . "' class='btn btn-info'><i class ='fa fa-edit'></i>Approve</a>";
+													echo "<a href='members.php?do=Activate&userid=" . $row['UserID'] . "' class='btn btn-info'><i class ='fa fa-edit'></i>Approve</a>";
 
 												}
 									echo "</td>";
@@ -424,6 +424,38 @@ session_start();
 				}else{
 
 					$the_msg = "<div class='alert alert-danger'>bad bad</div>";
+					redirect_home($the_msg);
+			}
+			echo "</div>";
+		}elseif ($do == 'Activate') { // delete  member page
+
+			echo "<h1 class='text-center'>Activate member</h1>";
+
+			echo "<div class='container'>";
+
+				
+				// Check if userid is there and numeric & get the integer vakue of it 
+
+				$userid = isset($_GET['userid']) && is_numeric($_GET['userid']) ? intval($_GET['userid']) : 0 ;
+
+				// SElect all the data associated with this userid 
+
+				$check = check_item('userid', 'shop.users', $userid);
+
+				// If there such Id Delete it
+
+				if($check > 0){
+						
+					$stmt = $con->prepare("UPDATE shop.users SET Regstatus = 1 WHERE UserID = ?");
+
+						$stmt->execute(array($userid));
+
+						$the_msg =  "<div class= 'alert alert-success'>" . $stmt->rowCount() . ' RECORD DELETED</div>';
+
+						redirect_home($the_msg);
+				}else{
+
+					$the_msg = "<div class='alert alert-danger'>This ID is not exicted</div>";
 					redirect_home($the_msg);
 			}
 			echo "</div>";
