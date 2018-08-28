@@ -96,3 +96,21 @@ function check_item($select, $from, $value){
 
 		return $stmt2->fetchColumn(); 
 	}
+
+/*
+	== Get Latest Records Function v1.0
+	== Function to Get Latest Items from the DB [USers, Items, Comments ]
+
+*/
+	function get_latest($select, $table, $order, $limit = '5' ){
+
+		global $con;
+
+		$get_stmt = $con->prepare("SELECT $select FROM $table ORDER BY $order DESC LIMIT $limit");
+
+		$get_stmt->execute();
+
+		$row = $get_stmt->fetchAll();
+
+		return $row;
+	}

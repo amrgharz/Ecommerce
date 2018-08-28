@@ -116,6 +116,22 @@ body{
 .latest{
 	margin-top:30px;
 }
+
+.latest-user{
+	margin-bottom: 0;
+}
+.latest-user .btn-success{
+	padding: 4px 8px;
+}
+
+.latest-user li {
+	padding:8px ;
+	overflow: hidden;
+}
+
+.latest-user li:nth-child(odd){
+	background-color:#EEE;
+}
 /* End Dashboard*/
 
 /*Start members page*/

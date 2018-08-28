@@ -8,6 +8,11 @@
 		include 'init.php';
 
 		// Start The Dashboard Page
+		
+		$latest_users = 4; //Variable to show the number of registered users dynamically
+
+		$the_latest = get_latest("*", "shop.users", "UserID", $latest_users); // latest user array
+
 
 ?>
 		<div class='container home-stats text-center'>
@@ -47,11 +52,24 @@
 				<div class = col-sm-6>
 					<div class = 'panel panel-default'>
 						<div class='panel-heading'>
-							<i class='fa fa-users'></i>Latest Users
+							<i class='fa fa-users'></i>Latest <?php echo $latest_users?> Users
 						</div>
 					</div>
 					<div class = 'panel-body'>
-						Test
+					 	<ul class= 'list-unstyled latest-user'>
+							<?php 
+								foreach ($the_latest as $user) {
+									echo "<li>";
+										echo $user['Username'];
+										echo '<a href="members.php?do=Edit&userid=' . $user['UserID'] . '">';
+											echo '<span class= "btn btn-success pull-right">';
+												echo "<i class= 'fa fa-edit'></i> Edit";
+											echo '</span>';
+										echo '</a>'	;
+									echo "</li>";
+								}
+							?>
+						</ul>
 					</div>
 				</div>
 				<div class = col-sm-6>
