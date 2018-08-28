@@ -141,7 +141,7 @@ session_start();
 
 			if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
-				echo "<h1 class='text-center'>Update Page</h1>";
+				echo "<h1 class='text-center'>Insert member</h1>";
 
 				echo "<div class='container'>";
 

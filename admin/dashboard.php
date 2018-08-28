@@ -1,6 +1,7 @@
 <?php
 	
 	session_start();
+	
 	$get_title = 'Dashboard';
 
 	if(isset($_SESSION['Username'])){
