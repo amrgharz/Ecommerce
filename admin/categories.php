@@ -18,7 +18,39 @@ session_start();
 
  	if($do == 'Manage'){
 
- 		echo "welcome";
+ 		$stmt2 = $con->prepare("SELECT * FROM shop.categories");
+
+ 		$stmt2->execute();
+
+ 		$cats = $stmt2->fetchAll(); ?>
+ 		<h1 class= 'text-center'> Manage Categories</h1>
+ 		<div class= "container categories">
+ 			<div class= 'panel panel-default'>
+ 				<div class='panel-heading'>Manage Categories</div>
+ 				<div class='panel-body'>
+ 				 <?php
+ 				 foreach ( $cats as $cat ){
+ 				 	echo "<div class= 'cat' >";
+	 				 	echo "<h3>" . $cat['Name'] . "</h3>";
+	 				 		echo "<p>"; 
+	 				 		if($cat['Description'] == ''){
+	 				 			echo 'This category description is empty';
+	 				 		}else{
+	 				 			echo $cat['Description'] ;
+	 				 		}
+	 				 		echo'</p>';
+	 				 	if($cat['Visibility'] == 1){echo "<span class= 'visible'> Hidden </span>"; }
+	 				 	if($cat['Allow_Comments'] == 1){echo "<span class= 'comment'> Comments Disabled </span>"; }
+	 				 	if($cat['Allow_Ads'] == 1){echo "<span class= 'ad'> Ads Disabled</span>"; }
+ 				 	echo "</div>";
+ 				 	echo "<hr>";
+ 				 }
+ 				 ?>
+ 				</div>
+ 			</div>
+ 		</div>
+
+ 		<?php
 
  	}elseif ($do == 'Add' ){?>
 

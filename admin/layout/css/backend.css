@@ -168,3 +168,35 @@ h1 {
 }
 
  /*End members page*/
+
+/* Start Categories Page*/
+.categories .cat h3{
+	margin : 0 0 10px;
+}
+
+.categories .cat:last-of-type ~ hr{
+	display : none;
+}
+
+.categories .cat .visible {
+	background-color: #e74c3c;
+	margin-right:5px;
+	padding : 5px 2px 3px 6px;
+	border-radius: 5px;
+	font-size: 18px;
+}
+.categories .cat .comment {
+	background-color: #9b59b6;
+	margin-right:5px;
+	padding : 5px 2px 3px 6px;
+	border-radius: 5px;
+	font-size: 18px;
+}
+.categories .cat .ad {
+	background-color: #f39c12;
+	margin-right:5px;
+	padding : 5px 6px 3px 6px;
+	border-radius: 5px;
+	font-size: 18px;
+}
+/* End Categories Page*/
