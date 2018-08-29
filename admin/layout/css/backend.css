@@ -173,7 +173,14 @@ h1 {
 .categories .panel-body{
 	padding:0;
 }
-
+.categories .ordering a{
+	color:#888;
+	text-decoration : none;
+}
+.categories .ordering .active{
+	color:red;
+	font-weight: bold;
+}
 .categories hr {
 	margin-top:5px;
 	margin-bottom:5px;
