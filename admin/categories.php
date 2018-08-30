@@ -48,7 +48,7 @@ session_start();
  				 	echo "<div class= 'cat' >";
  				 		echo "<div class= 'hidden-buttons'>";
  				 			echo "<a href='categories.php?do=Edit&catid=" . $cat['ID'] . "' class='btn btn-primary'><i class='fa fa-edit'></i>Edit</a>";
- 				 			echo "<a href='#' class='btn btn-danger'><i class='fa fa-close'></i>Delete</a>";
+ 				 			echo "<a href='categories.php?do=Delete&catid=" . $cat['ID'] . "' class='confirm btn btn-danger'><i class='fa fa-close'></i>Delete</a>";
  				 		echo "</div>";
 	 				 	echo "<h3>" . $cat['Name'] . "</h3>";
 	 				 		echo "<p>"; 
@@ -67,6 +67,7 @@ session_start();
  				 ?>
  				</div>
  			</div>
+ 			<a class="add-category btn btn-primary "href="categories.php?do=Add"><i class="fa fa-plus"></i>Add New Category</a>
  		</div>
 
  		<?php
@@ -302,11 +303,11 @@ session_start();
 							<label class="col-sm-2 control-label">Allow Comment</label>
 							<div class="col-sm-10">
 								<div>
-									<input id="com-yes" type="radio" name="comminting" value='0' <?php if($cat['Allow_Comments'] == 0 ){ echo 'checked';}?> />
+									<input id="com-yes" type="radio" name="commenting" value='0' <?php if($cat['Allow_Comments'] == 0 ){ echo 'checked';}?> />
 									<label for="com-yes">Yes</label>
 								</div>
 								<div>
-									<input id="com-no" type="radio" name="comminting" value='1' <?php if($cat['Allow_Comments'] == 1 ){ echo 'checked';}?>/>
+									<input id="com-no" type="radio" name="commenting" value='1' <?php if($cat['Allow_Comments'] == 1 ){ echo 'checked';}?>/>
 									<label for="com-no">No</label>
 								</div>
 							</div>
@@ -348,11 +349,93 @@ session_start();
 				$the_msg = "<div class='alert alert-danger'>there is no such ID</div>" ;
 
 				redirect_home($the_msg);
+
+				echo "</div>";
 			}
 
  	}elseif ($do == 'Update'){
 
+ 		//Update Category
+
+			echo "<h1 class='text-center'>Update Category</h1>";
+
+			echo "<div class='container'>";
+
+				if($_SERVER['REQUEST_METHOD'] == 'POST'){
+
+					// Get the variables From the Form 
+
+					$id       	= $_POST['catid'];
+					$name      	= $_POST['name'];
+					$desc 	   	= $_POST['description'];
+					$order  	= $_POST['ordering'];
+					$visible  	= $_POST['visibility'];
+					$comment  	= $_POST['commenting'];
+					$ad  		= $_POST['advertising'];
+
+					// check if there is no error proceed the update  operation
+
+			
+					$stmt = $con->prepare("UPDATE 
+												shop.categories
+											SET Name = ?,
+										 	 	Description= ?, 
+										 	 	Ordering= ?,
+										 	 	Visibility= ?,
+										 	 	Allow_Comments= ?,
+										 	 	Allow_Ads = ?
+										  	WHERE ID= ?");
+
+					$stmt->execute(array($name, $desc, $order, $visible, $comment, $ad, $id));
+
+					// Echo Success Meassage 
+
+					$the_msg = "<div class= 'alert alert-success'>" . $stmt->rowCount() . ' RECORD UPDATED</div>';
+
+					redirect_home($the_msg, 'back',5 );
+
+			}else{
+
+				$the_msg =" <div class = 'alert alert-danger'> YOU Man Get the Fuck out of here</div>";
+				redirect_home($the_msg);
+			}
+
+			echo "</div>";
+
+
  	}elseif ($do == 'Delete'){
+ 		echo "<h1 class='text-center'>Delete Category</h1>";
+
+			echo "<div class='container'>";
+
+				
+				// Check if catid is there and numeric & get the integer vakue of it 
+
+				$catid = isset($_GET['catid']) && is_numeric($_GET['catid']) ? intval($_GET['catid']) : 0 ;
+
+				// SElect all the data associated with this userid 
+
+				$check = check_item('ID', 'shop.categories', $catid);
+
+				// If there such Id Delete it
+
+				if($check > 0){
+						
+					$stmt = $con->prepare("DELETE FROM shop.categories WHERE ID= :zid");
+
+						$stmt->bindParam(":zid" , $catid);
+
+						$stmt->execute();
+
+						$the_msg =  "<div class= 'alert alert-success'>" . $stmt->rowCount() . ' RECORD DELETED</div>';
+
+						redirect_home($the_msg , 'back');
+				}else{
+
+					$the_msg = "<div class='alert alert-danger'>bad bad</div>";
+					redirect_home($the_msg);
+			}
+			echo "</div>";
 
  	} 	
 

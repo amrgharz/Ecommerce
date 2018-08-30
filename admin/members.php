@@ -318,7 +318,7 @@ session_start();
 			}
 		}elseif ($do == 'Update' ){ //Update Page
 
-			echo "<h1 class='text-center'>Update Page</h1>";
+			echo "<h1 class='text-center'>Update Member</h1>";
 
 			echo "<div class='container'>";
 
