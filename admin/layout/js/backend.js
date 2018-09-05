@@ -1,5 +1,9 @@
 console.log("hey")
 $(function(){
+	//Trigger The selectBox method
+	$("select").selectBoxIt({
+		autoWidth: false
+	});
 
 	$('[placeholder]').focus(function (){
 
@@ -40,7 +44,24 @@ $(function(){
 	$('.confirm').click(function(){
 
 		return confirm("Are You Sure");
-	})
+	});
+	//category view option'
 
+	$('.cat h3').click(function(){
+		$(this).next('.full-view').fadeToggle(500);
+	});
+
+	$('.option span').click(function(){
+		$(this).addClass('active').siblings('span').removeClass('active');
+
+		if($(this).data('view') === 'full'){
+
+			$('.cat .full-view').fadeIn(300);
+		}else{
+			$('.cat .full-view').fadeOut(300);
+		}
+	});
+
+	
 });
 

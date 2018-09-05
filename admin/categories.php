@@ -36,10 +36,13 @@ session_start();
  		<div class= "container categories">
  			<div class= 'panel panel-default'>
  				<div class='panel-heading'>
-					Manage Categories
-					<div class='ordering pull-right'>Ordering
+					<i class= 'fa fa-edit'></i>Manage Categories 
+					<div class='option pull-right'> <i class = 'fa fa-sort'></i>Ordering: [
 						<a class = "<?php if($sort == 'ASC'){echo 'active';}?>" href="?sort=ASC">Asc</a>
-						<a class = "<?php if($sort == 'DESC'){echo 'active';}?>" href="?sort=DESC">Desc</a>
+						<a class = "<?php if($sort == 'DESC'){echo 'active';}?>" href="?sort=DESC">Desc</a> ]
+						<i class = 'fa fa-eye'></i>View: [
+						<span class= "active" data-view= "full">Full</span> |
+						<span data-view= "classic">Classic</span> ]
 					</div>
 				</div>
  				<div class='panel-body'>
@@ -51,6 +54,7 @@ session_start();
  				 			echo "<a href='categories.php?do=Delete&catid=" . $cat['ID'] . "' class='confirm btn btn-danger'><i class='fa fa-close'></i>Delete</a>";
  				 		echo "</div>";
 	 				 	echo "<h3>" . $cat['Name'] . "</h3>";
+	 				 	echo "<div class='full-view'>";
 	 				 		echo "<p>"; 
 	 				 		if($cat['Description'] == ''){
 	 				 			echo 'This category description is empty';
@@ -58,9 +62,10 @@ session_start();
 	 				 			echo $cat['Description'] ;
 	 				 		}
 	 				 		echo'</p>';
-	 				 	if($cat['Visibility'] == 1){echo "<span class= 'visible'> Hidden </span>"; }
-	 				 	if($cat['Allow_Comments'] == 1){echo "<span class= 'comment'> Comments Disabled </span>"; }
-	 				 	if($cat['Allow_Ads'] == 1){echo "<span class= 'ad'> Ads Disabled</span>"; }
+	 				 	if($cat['Visibility'] == 1){echo "<span class= 'visible'><i class='fa fa-eye'></i> Hidden </span>"; }
+	 				 	if($cat['Allow_Comments'] == 1){echo "<span class= 'comment'><i class='fa fa-close'></i> Comments Disabled </span>"; }
+	 				 	if($cat['Allow_Ads'] == 1){echo "<span class= 'ad'><i class='fa fa-close'></i> Ads Disabled</span>"; }
+	 				 	echo "</div>";
  				 	echo "</div>";
  				 	echo "<hr>";
  				 }

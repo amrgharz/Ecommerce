@@ -170,20 +170,31 @@ h1 {
  /*End members page*/
 
 /* Start Categories Page*/
+
+.categories .panel-heading{
+	font-weight:bold;
+	color:#959595;
+}
+
 .categories .panel-body{
 	padding:0;
 }
-.categories .ordering a{
+.categories .option a{
 	color:#888;
 	text-decoration : none;
 }
-.categories .ordering .active{
+
+.categories .option span{
+	color:#888;
+	cursor: pointer;
+}
+.categories .option .active{
 	color:red;
 	font-weight: bold;
 }
 .categories hr {
-	margin-top:5px;
-	margin-bottom:5px;
+	margin-top:0;
+	margin-bottom:0;
 }
 .categories .cat{
 	padding:15px;
@@ -209,7 +220,15 @@ h1 {
 }
 
 .categories .cat h3{
-	margin : 0 0 10px;
+	margin : 0;
+	cursor : pointer;
+	font-weight: bold;
+	color : #6A6A6A;
+}
+
+.categories .cat .full-view p {
+	margin : 10px 0;
+	color:#707070;
 }
 
 .categories .cat:last-of-type ~ hr{
