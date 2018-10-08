@@ -307,7 +307,7 @@
 			<h1 class="text-center">Edit Item</h1>
 
 			<div class="container">
-				<form class="form-horizontal" action= "?do=Insert" method= "POST">
+				<form class="form-horizontal" action= "?do=Update" method= "POST">
 					<!-- Start Name Field -->
 					<div class="form-group form-group-lg">
 						<label class="col-sm-2 control-label">Name</label>
@@ -373,7 +373,6 @@
 						<label class="col-sm-2 control-label">Status</label>
 						<div class="col-sm-10">
 							<select name="status">
-								<option value='0'>...</option>
 								<option value='1' <?php if ($item['Status'] == 1){echo 'selected';}?>>New</option>
 								<option value='2' <?php if ($item['Status'] == 2){echo 'selected';}?>>Like New</option>
 								<option value='3' <?php if ($item['Status'] == 3){echo 'selected';}?>>Used</option>
@@ -386,7 +385,6 @@
 						<label class="col-sm-2 control-label">Member</label>
 						<div class="col-sm-10">
 							<select name="member">
-								<option value='0'>...</option>
 								<?php
 								$stmt = $con->prepare("SELECT * FROM shop.users");
 								$stmt->execute();
@@ -404,7 +402,6 @@
 						<label class="col-sm-2 control-label">Category</label>
 						<div class="col-sm-10">
 							<select name="category">
-								<option value='0'>...</option>
 								<?php
 								$stmt = $con->prepare("SELECT * FROM shop.categories");
 								$stmt->execute();
@@ -421,7 +418,7 @@
 					<!-- Start Save Field -->
 					<div class="form-group form-group-lg">
 						<div class="col-sm-10 col-sm-offset-2">
-							<input type="submit" value='Add Category' class="btn btn-primary btn btn-sm" />
+							<input type="submit" value='Edit Item' class="btn btn-primary btn btn-sm" />
 						</div>
 					</div>
 					<!-- End Of Save Field -->
@@ -442,7 +439,7 @@
 			}
 
  	}elseif ($do == 'Update'){
- 	echo "<h1 class='text-center'>Update Member</h1>";
+ 	echo "<h1 class='text-center'>Update Item</h1>";
 
 			echo "<div class='container'>";
 
@@ -457,7 +454,7 @@
 					$country  	= $_POST['country'];
 					$status  	= $_POST['status'];
 					$member  	= $_POST['member'];
-					$category 	  	= $_POST['category'];
+					$category 	= $_POST['category'];
 
 					// Validate The form
 
@@ -507,8 +504,8 @@
 											 	Price= ?,
 											 	Country_Made= ?,
 											 	Status =?,
-											 	Cat_ID = ?,
-											 	Member_ID =?
+											 	Member_ID =?,
+											 	Cat_ID = ?
 											 WHERE 
 											 	Item_ID= ?");
 					$stmt->execute(array($name, $desc, $price, $country, $status, $member, $category, $id));
