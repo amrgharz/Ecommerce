@@ -36,7 +36,7 @@
 				<div class='col-md-3'>
 					<div class='stat st-items'>
 						Total Items
-						<span>1500</span>
+						<span><a href="Items.php"><?php echo count_items('Item_ID', 'shop.items')?></span></a>
 					</div>	
 				</div>
 				<div class='col-md-3'>
