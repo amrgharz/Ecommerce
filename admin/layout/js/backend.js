@@ -1,5 +1,15 @@
 console.log("hey")
 $(function(){
+	//dashboard
+	$('.toggle-info').click(function(){
+		$(this).toggleClass('selected').parents().next('.panel-body').fadeToggle(1000);
+		if($(this).hasClass('selected')){
+			$(this).html('<i class="fa fa-minus fa-lg"></i>');
+		}else{
+			$(this).html('<i class="fa fa-plus fa-lg"></i>');
+		}
+	});
+
 	//Trigger The selectBox method
 	$("select").selectBoxIt({
 		autoWidth: false

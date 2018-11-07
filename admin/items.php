@@ -58,6 +58,11 @@
 									echo "<td> 
 												<a href='items.php?do=Edit&itemid=" . $item['Item_ID'] . "' class='btn btn-success'><i class ='fa fa-edit'></i>Edit</a>
 												<a href='items.php?do=Delete&itemid=" . $item['Item_ID'] . "' class='btn btn-danger confirm'><i class ='fa fa-close'></i>Delete</a>";
+												if($item['Approve'] == 0){
+
+													echo "<a href='items.php?do=Approve&itemid=" . $item['Item_ID'] . "' class='btn btn-info'><i class ='fa fa-check'></i>Approve</a>";
+
+												}
 												}
 									echo "</td>";
 								echo "</tr>";
@@ -531,8 +536,71 @@
 
 
  	}elseif ($do == 'Delete'){
+ 		echo "<h1 class='text-center'>Delete member</h1>";
+
+			echo "<div class='container'>";
+
+				
+				// Check if itemid is there and numeric & get the integer vakue of it 
+
+				$itemid = isset($_GET['itemid']) && is_numeric($_GET['itemid']) ? intval($_GET['itemid']) : 0 ;
+
+				// SElect all the data associated with this userid 
+
+				$check = check_item('Item_ID', 'shop.items', $itemid);
+
+				// If there such Id Delete it
+
+				if($check > 0){
+						
+					$stmt = $con->prepare("DELETE FROM shop.items WHERE Item_ID = :zitem");
+
+						$stmt->bindParam(":zitem" , $itemid);
+
+						$stmt->execute();
+
+						$the_msg =  "<div class= 'alert alert-success'>" . $stmt->rowCount() . ' RECORD DELETED</div>';
+
+						redirect_home($the_msg, 'back');
+				}else{
+
+					$the_msg = "<div class='alert alert-danger'>bad bad</div>";
+					redirect_home($the_msg);
+					echo "</div>";
+			}
+		
 
  	}elseif ($do == 'Approve'){
+ 		echo "<h1 class='text-center'>Approve Item</h1>";
+
+			echo "<div class='container'>";
+
+				
+				// Check if userid is there and numeric & get the integer vakue of it 
+
+				$itemid = isset($_GET['itemid']) && is_numeric($_GET['itemid']) ? intval($_GET['itemid']) : 0 ;
+
+				// SElect all the data associated with this userid 
+
+				$check = check_item('Item_ID', 'shop.items', $itemid);
+
+				// If there such Id Delete it
+
+				if($check > 0){
+						
+					$stmt = $con->prepare("UPDATE shop.items SET Approve = 1 WHERE Item_ID = ?");
+
+						$stmt->execute(array($itemid));
+
+						$the_msg =  "<div class= 'alert alert-success'>" . $stmt->rowCount() . ' RECORD DELETED</div>';
+
+						redirect_home($the_msg, 'back');
+				}else{
+
+					$the_msg = "<div class='alert alert-danger'>This ID is not exicted</div>";
+					redirect_home($the_msg);
+			}
+			echo "</div>";
 
  	}
 

@@ -11,6 +11,7 @@
 			'ITEMS' 		=>  'Items',
 			'MEMBERS' 		=>  'Members',
 			'STATISTICS' 	=>  'Statistcs',
+			'COMMENTS'		=>  'Comments',
 			'LOGS' 			=>  'Logs',
  
 		);

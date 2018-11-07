@@ -24,7 +24,7 @@ session_start();
 
 			if(isset($_GET['page']) && $_GET['page'] =='pending'){
 
-				$query = 'AND Regstatus = 0';
+				$query = 'AND Regstatus == 0';
 			}
 
 				//select all users except admin
@@ -63,13 +63,14 @@ session_start();
 									echo "<td>" . $row['Email'] . "</td>";
 									echo "<td>" . $row['Fullname'] . "</td>";
 									echo "<td>" . $row['Date']  .  "</td>";
+									echo "<td>" . $row['Regstatus']  .  "</td>";
 									echo "<td> 
 												<a href='members.php?do=Edit&userid=" . $row['UserID'] . "' class='btn btn-success'><i class ='fa fa-edit'></i>Edit</a>
 												<a href='members.php?do=Delete&userid=" . $row['UserID'] . "' class='btn btn-danger confirm'><i class ='fa fa-close'></i>Delete</a>";
 
 												if($row['Regstatus'] == 0){
 
-													echo "<a href='members.php?do=Activate&userid=" . $row['UserID'] . "' class='btn btn-info'><i class ='fa fa-edit'></i>Approve</a>";
+													echo "<a href='members.php?do=Activate&userid=" . $row['UserID'] . "' class='btn btn-info'><i class ='fa fa-check'></i>Approve</a>";
 
 												}
 									echo "</td>";
@@ -201,7 +202,7 @@ session_start();
 
 							$stmt = $con->prepare("INSERT INTO 
 																shop.users(Username, Password, Email, Fullname,Regstatus, Date) 
-													VALUES(:zuser, :zpass, :zmail, :zname,1 , now())");
+													VALUES(:zuser, :zpass, :zmail, :zname,0 , now())");
 
 							$stmt->execute(array(
 
@@ -425,8 +426,9 @@ session_start();
 
 					$the_msg = "<div class='alert alert-danger'>bad bad</div>";
 					redirect_home($the_msg);
+					echo "</div>";
 			}
-			echo "</div>";
+			
 		}elseif ($do == 'Activate') { // delete  member page
 
 			echo "<h1 class='text-center'>Activate member</h1>";
