@@ -17,7 +17,9 @@
  		$stmt = $con->prepare("SELECT shop.items.*, shop.categories.Name AS category_name, shop.users.Username 
  								FROM shop.items
 								INNER JOIN shop.categories ON categories.ID = items.Cat_ID
-								INNER JOIN shop.users ON users.UserID = items.Member_ID");
+								INNER JOIN shop.users ON users.UserID = items.Member_ID
+								ORDER BY 
+								Item_ID DESC");
 
 			   // Excute The Satment
 
@@ -27,6 +29,7 @@
 
 			$items = $stmt->fetchAll();
 
+			if(!empty ($items)){
 
 			?>
 
@@ -72,6 +75,13 @@
 				<a href='items.php?do=Add'class="btn btn-primary "><i class=" fa fa-plus"></i>New Item </a>
 
 			</div>
+			<?php } else {
+
+				echo "<div class='container'>";
+					echo "<div class='alert alert-info'>There's No record </div> ";
+					echo "<a href='items.php?do=Add'class='btn btn-primary'><i class='fa fa-plus'></i>New Item </a>";
+				echo "</div>";		
+		} ?>
 
 		<?php
  	}elseif ($do == 'Add' ){?>
@@ -183,7 +193,7 @@
 					<!-- Start Save Field -->
 					<div class="form-group form-group-lg">
 						<div class="col-sm-10 col-sm-offset-2">
-							<input type="submit" value='Add Category' class="btn btn-primary btn btn-sm" />
+							<input type="submit" value='Add Item' class="btn btn-primary btn btn-sm" />
 						</div>
 					</div>
 					<!-- End Of Save Field -->
@@ -234,10 +244,10 @@
 					$error_handler[]= "You need to chose a status";
 				}
 				if($member == 0 ){
-					$error_handler[]= "You need to chose a status";
+					$error_handler[]= "You need to chose a member";
 				}
 				if($category == 0 ){
-					$error_handler[]= "You need to chose a status";
+					$error_handler[]= "You need to chose a category";
 				}
 
 
@@ -427,10 +437,61 @@
 						</div>
 					</div>
 					<!-- End Of Save Field -->
-				</form>
+				</form><?php
+					//select all users except admin
 
-			</div>
-				
+					$stmt = $con->prepare("SELECT 	
+													shop.comments.*, shop.users.Username AS Member
+											FROM
+													shop.comments
+											INNER JOIN 
+													shop.users
+											ON 
+													shop.users.UserID = shop.comments.User_ID
+											WHERE 
+													Item_ID = ? ");
+
+					   // Excute The Satment
+
+					$stmt->execute(array($itemid));
+
+						// Assign to variable
+
+					$rows = $stmt->fetchAll();
+
+					?>
+
+					<h1 class="text-center">Manage [<?php echo  $item['Name'] ?>]  Commetns</h1>
+						<div class="table-responsive">
+							<table class="main-table text-center table table-bordered">
+								<tr>
+									<td>Comment</td>
+									<td>User Name</td>
+									<td>Add Date</td>
+									<td>Control</td>
+								</tr>
+
+								<?php
+									foreach ($rows as $row) {
+										echo "<tr>";
+											echo "<td>" . $row['Comment'] . "</td>";
+											echo "<td>" . $row['Member'] . "</td>";
+											echo "<td>" . $row['Comment_Date']  .  "</td>";
+											echo "<td> 
+														<a href='comments.php?do=Edit&comid=" . $row["C_ID"] . "' class='btn btn-success'><i class ='fa fa-edit'></i>Edit</a>
+														<a href='comments.php?do=Delete&comid=" . $row['C_ID'] . "' class='btn btn-danger confirm'><i class ='fa fa-close'></i>Delete</a>";
+
+														if($row['Status'] == 0){
+
+															echo "<a href='comments.php?do=Approve&comid=" . $row['C_ID'] . "' class='btn btn-info'><i class ='fa fa-check'></i>Approve</a>";
+
+														}
+											echo "</td>";
+										echo "</tr>";
+									}
+								?>
+							</table>
+					</div>
 		<?php
 
 			// If there is no such ID show an error message 
@@ -592,7 +653,7 @@
 
 						$stmt->execute(array($itemid));
 
-						$the_msg =  "<div class= 'alert alert-success'>" . $stmt->rowCount() . ' RECORD DELETED</div>';
+						$the_msg =  "<div class= 'alert alert-success'>" . $stmt->rowCount() . ' RECORD Updated</div>';
 
 						redirect_home($the_msg, 'back');
 				}else{

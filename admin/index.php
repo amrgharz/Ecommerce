@@ -15,9 +15,8 @@
 
 		$username = $_POST['user'];
 		$password = $_POST['pass'];
-		$hashedpass = sha1($password);
 
-		// check if user exicts in database
+		// check if user exicts in the database
 
 		$stmt = $con->prepare("SELECT
 										UserID, Username, Password
@@ -30,13 +29,14 @@
 								AND
 										GroupID = 1
 								LIMIT 1");
-		$stmt->execute(array($username, $hashedpass));
+		$stmt->execute(array($username, $password));
 		$row = $stmt->fetch();
 		$count = $stmt->rowCount();
+		echo $count;
 
 		// If the count > 1 that means the database has record about this user
 
-		if ($count> 0){
+		if ($count == 1){
 			$_SESSION['Username'] = $username; // Register Session name
 			$_SESSION['UserID'] = $row['UserID'];  // Regester Session ID 
 			header('location: dashboard.php'); // redirect to dashboard page

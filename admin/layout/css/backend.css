@@ -151,6 +151,40 @@ body{
 .latest-user li:nth-child(odd){
 	background-color:#EEE;
 }
+.latest .comment-box 	{
+	margin: 5px 0 10px;
+} 
+
+.latest .comment-box .member-n,
+.latest .comment-box .member-c{
+	float:left;
+}
+.latest .comment-box .member-n{
+	margin-right: 20px;
+	width:80px;
+	text-align:center;
+	position: relative;
+	top:10px;
+}
+.latest .comment-box .member-c{
+	width: calc(100% - 120px);
+	background-color:gray;
+	padding:10px;
+	position: relative;
+}
+.latest .comment-box .member-c:before {
+	content:"";
+	position:absolute;
+	top:5px;
+	left:-20px;
+	width:0;
+	height:0;
+	border-style:solid;
+	border-color:transparent gray transparent transparent;
+	border-width:10px; 
+
+}
+
 /* End Dashboard*/
 
 /*Start members page*/

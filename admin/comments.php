@@ -33,7 +33,9 @@ session_start();
 									INNER JOIN 
 											shop.users
 									ON 
-											shop.users.UserID = shop.comments.User_ID");
+											shop.users.UserID = shop.comments.User_ID
+									ORDER BY 
+											C_ID DESC");
 
 			   // Excute The Satment
 
@@ -42,6 +44,8 @@ session_start();
 				// Assign to variable
 
 			$rows = $stmt->fetchAll();
+
+			if (!empty ($rows)){
 
 			?>
 
@@ -68,11 +72,11 @@ session_start();
 									echo "<td>" . $row['Comment_Date']  .  "</td>";
 									echo "<td> 
 												<a href='comments.php?do=Edit&comid=" . $row["C_ID"] . "' class='btn btn-success'><i class ='fa fa-edit'></i>Edit</a>
-												<a href='members.php?do=Delete&comid=" . $row['C_ID'] . "' class='btn btn-danger confirm'><i class ='fa fa-close'></i>Delete</a>";
+												<a href='comments.php?do=Delete&comid=" . $row['C_ID'] . "' class='btn btn-danger confirm'><i class ='fa fa-close'></i>Delete</a>";
 
 												if($row['Status'] == 0){
 
-													echo "<a href='comments.php?do=Activate&comid=" . $row['C_ID'] . "' class='btn btn-info'><i class ='fa fa-check'></i>Approve</a>";
+													echo "<a href='comments.php?do=Approve&comid=" . $row['C_ID'] . "' class='btn btn-info'><i class ='fa fa-check'></i>Approve</a>";
 
 												}
 									echo "</td>";
@@ -81,6 +85,12 @@ session_start();
 						?>
 					</table>
 				</div>
+				<?php } else {
+
+				echo "<div class='container'>";
+					echo "<div class='alert alert-info'>There's No record </div> ";
+				echo "</div>";		
+		} ?>
 			</div>
 
 		<?php
@@ -120,7 +130,7 @@ session_start();
 						<div class="form-group form-group-lg">
 							<label class="col-sm-2 control-label">Comment</label>
 							<div class="col-sm-10">
-								<textarea class='form-control' name='comment'><?php echo $row['comment']?></textarea>
+								<textarea class='form-control' name='comment'><?php echo $row['Comment']?></textarea>
 							</div>
 						</div>
 						<!-- End Of USername Field -->	
@@ -159,8 +169,8 @@ session_start();
 
 					//Update the database with this info
 
-					$stmt = $con->prepare("UPDATE shop.comments SET comment= ? WHERE comid= ?");
-					$stmt->execute(array($comid, $comment));
+					$stmt = $con->prepare("UPDATE shop.comments SET comment= ? WHERE C_ID= ?");
+					$stmt->execute(array($comment, $comid));
 
 					// Echo Success Meassage 
 
@@ -178,34 +188,34 @@ session_start();
 			echo "</div>";
 
 
-		}elseif ($do == 'Delete') { // delete  member page
+		}elseif ($do == 'Delete') { // Delete Comment page
 
-			echo "<h1 class='text-center'>Delete member</h1>";
+			echo "<h1 class='text-center'>Delete Comment</h1>";
 
 			echo "<div class='container'>";
 
 				
 				// Check if userid is there and numeric & get the integer vakue of it 
 
-				$userid = isset($_GET['userid']) && is_numeric($_GET['userid']) ? intval($_GET['userid']) : 0 ;
+				$comid = isset($_GET['comid']) && is_numeric($_GET['comid']) ? intval($_GET['comid']) : 0 ;
 
 				// SElect all the data associated with this userid 
 
-				$check = check_item('userid', 'shop.users', $userid);
+				$check = check_item('C_ID', 'shop.comments', $comid);
 
 				// If there such Id Delete it
 
 				if($check > 0){
 						
-					$stmt = $con->prepare("DELETE FROM shop.users WHERE UserID = :zuser");
+					$stmt = $con->prepare("DELETE FROM shop.comments WHERE C_ID = :zid");
 
-						$stmt->bindParam(":zuser" , $userid);
+						$stmt->bindParam(":zid" , $comid);
 
 						$stmt->execute();
 
 						$the_msg =  "<div class= 'alert alert-success'>" . $stmt->rowCount() . ' RECORD DELETED</div>';
 
-						redirect_home($the_msg);
+						redirect_home($the_msg, 'back');
 				}else{
 
 					$the_msg = "<div class='alert alert-danger'>bad bad</div>";
@@ -213,7 +223,7 @@ session_start();
 					echo "</div>";
 			}
 			
-		}elseif ($do == 'Activate') { // delete  member page
+		}elseif ($do == 'Approve') { // delete  member page
 
 			echo "<h1 class='text-center'>Activate member</h1>";
 
@@ -222,23 +232,23 @@ session_start();
 				
 				// Check if userid is there and numeric & get the integer vakue of it 
 
-				$userid = isset($_GET['userid']) && is_numeric($_GET['userid']) ? intval($_GET['userid']) : 0 ;
+				$comid = isset($_GET['comid']) && is_numeric($_GET['comid']) ? intval($_GET['comid']) : 0 ;
 
 				// SElect all the data associated with this userid 
 
-				$check = check_item('userid', 'shop.users', $userid);
+				$check = check_item('C_ID', 'shop.comments', $comid);
 
 				// If there such Id Delete it
 
 				if($check > 0){
 						
-					$stmt = $con->prepare("UPDATE shop.users SET Regstatus = 1 WHERE UserID = ?");
+					$stmt = $con->prepare("UPDATE shop.comments SET Status = 1 WHERE C_ID = ?");
 
-						$stmt->execute(array($userid));
+						$stmt->execute(array($comid));
 
-						$the_msg =  "<div class= 'alert alert-success'>" . $stmt->rowCount() . ' RECORD DELETED</div>';
+						$the_msg =  "<div class= 'alert alert-success'>" . $stmt->rowCount() . ' RECORD APPROVED</div>';
 
-						redirect_home($the_msg);
+						redirect_home($the_msg, 'back');
 				}else{
 
 					$the_msg = "<div class='alert alert-danger'>This ID is not exicted</div>";
