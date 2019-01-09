@@ -1,6 +1,16 @@
 <?php
 
+	// Error Reborting
+
+	ini_set('display_errors', 'On');
+	error_reporting(E_ALL);
+
 	include 'admin/connect.php';
+
+	$session_user= '';
+	if (isset($_SESSION['user'])){
+		$session_user = $_SESSION['user'];
+	}
 	//Routs
 
 	$tpl = 'includes/templates/'; // Template Directory

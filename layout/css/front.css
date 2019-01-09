@@ -21,6 +21,14 @@ h1 {
 	color: tomato;
 }
 
+.main-form .astrisk{
+	font-size: 30px;
+	position: absolute;
+	right: 20px;
+	top: 4px;
+	color: tomato;
+}
+
 /*   ~Start Bootstrab Rolz Editing~*/
 .navbar {
 	border-radius: 0;
@@ -116,3 +124,109 @@ h1 {
 	color:#FFF;
 }
 /*end categories page*/
+
+/* Start Profile Page */
+.information{
+	margin-top:20px;
+}
+.information{
+	margin:0;
+	padding: 0;
+}
+.information ul li{
+	padding:10px;
+}
+.information ul li:nth-child(odd){
+	background-color:#EEE;
+}
+.information ul li span{
+	display:inline-block;
+	width:120px;
+}
+
+.thumbnail .date{
+	text-align: right;
+	color:#AAA;
+	font-weight:bold;
+}
+.approve-status{
+	position: absolute;
+	top: 45px;
+	left: 5px;
+	background-color: #93748d;
+}
+
+/* End Profile Page */
+
+/*Start Item Page*/
+
+.item-info h2{
+	padding-bottom: 10px;
+	margin:0;
+}
+
+.item-info {
+	padding:10px;
+}
+
+.item-info ul li {
+	padding:10px;
+}
+
+.item-info ul li:nth-child(odd){
+	background-color: #e8e8e8;
+}
+
+.item-info ul li span{
+	display:inline-block;
+	width:120px;
+
+}
+
+.add-comment h3{
+	margin: 0 0 10px;
+}
+
+.add-comment textarea{
+	display :block;
+	margin-bottom: 10px;
+	width:500px;
+	height:150px;
+}
+
+.comment-box{
+margin-bottom: 10px;
+
+}
+
+.comment-box img{
+	max-width:100px;
+	margin-bottom:15px;
+}
+.comment-box .lead{
+	background-color:#DED2D2;
+	position: relative;
+	padding:10px;
+	margin-top:40px;
+}
+
+.comment-box .lead:before{
+	content:"";
+	width:0;
+	height:0;
+	border-width: 15px;
+	border-style: solid;
+	border-color: transparent #DED2D2 transparent transparent;
+	position:absolute;
+	left:-30px;
+	top:10px;
+}
+
+
+/*End Item Page*/
+
+/*Start Our Custom*/
+.custom-hr{
+	border-top:1px solid #c9c9c9;
+}
+/*End Our Custom*/

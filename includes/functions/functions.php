@@ -23,13 +23,19 @@
 	-Function To Get Items from the DB.
 
 */
-	function get_items($Cat_ID){
+	function get_items($where, $value, $approve= NULL){
 
 		global $con;
 
-		$get_items = $con->prepare("SELECT * FROM shop.items WHERE Cat_ID = ? ORDER BY Item_ID DESC");
+		if($approve == NULL){
+			$sql = 'AND Approve = 1';
+		}else{
+			$sql = NULL;
+		}
 
-		$get_items->execute(array($Cat_ID));
+		$get_items = $con->prepare("SELECT * FROM shop.items WHERE $where = ? $sql ORDER BY Item_ID DESC");
+
+		$get_items->execute(array($value));
 
 		$items = $get_items->fetchAll();
 
@@ -150,4 +156,29 @@ function check_item($select, $from, $value){
 		$row = $get_stmt->fetchAll();
 
 		return $row;
+	}
+
+/*	Check If The User Is Not Activated
+	Function To Check The RegStatus Of The User*/
+
+	function check_reg_status($user){
+
+		global $con;
+
+		$stmtx = $con->prepare("SELECT
+									Username, RegStatus
+								FROM
+									shop.users
+								WHERE
+									Username = ?
+								AND
+									RegStatus = 0
+								");
+
+		$stmtx->execute(array($user));
+
+		$status = $stmtx-> rowCount();
+
+		return $status;
+
 	}

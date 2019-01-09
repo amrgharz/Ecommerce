@@ -52,5 +52,11 @@ $(function(){
 
 		return confirm("Are You Sure");
 	});
+
+	$('.live').keyup(function(){
+		$($(this).data('class')).text($(this).val());
+	});
+
+
 });
 

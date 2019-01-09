@@ -1,5 +1,3 @@
-<?php $get_title = 'login';
-?>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -16,8 +14,25 @@
 			<div class="container">
 				<?php 
 					if (isset($_SESSION['user'])){
-						echo "welcome " . $_SESSION['user'];
+
+						echo "welcome " . $session_user . ' ';
+
+						echo '<a href="profile.php">My Profile</a>' . '  ';
+
+						echo '<a href="logout.php"> Log Out</a>';
+
+						echo '<a href="newad.php"> New Item</a>';
+
+						$user_status = check_reg_status($session_user);
+
+						if ($user_status == 1){
+
+							// User Is Not Activated 
+
+						}
+
 					}else{
+
 				?>
 				<a href='login.php'>
 					<span class='pull-right'>Login/Sign Up</span>
@@ -45,10 +60,10 @@
 		       <?php
 
 		       	foreach (get_cats() as $cat){
-		       		echo '<li>
-		       				<a href="categories.php?pageid= ' . $cat['ID'] .'&pagename=' . str_replace(' ', '-', $cat['Name']). '">' . $cat['Name'] . 
-		       				'</a>
-		       			 </li>';
+		       		echo 
+		       			'<li>
+		       				<a href="categories.php?pageid= ' . $cat['ID']. ' "> ' . $cat['Name'] . ' </a>
+		       			</li>';
 		       	}
 
 		        ?>
